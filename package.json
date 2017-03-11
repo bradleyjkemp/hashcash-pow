@@ -1,0 +1,25 @@
+{
+  "name": "hashcow-pow",
+  "version": "1.0.0",
+  "description": "Specification compliant, JavaScript Hashcash implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "coverage": "nyc mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradleyjkemp/hashcash-pow.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bradleyjkemp/hashcash-pow/issues"
+  },
+  "homepage": "https://github.com/bradleyjkemp/hashcash-pow#readme",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2"
+  }
+}
