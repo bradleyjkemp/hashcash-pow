@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title> Tests </title>
+        <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+    </head>
+    <body>
+        <div id="mocha"></div>
+        <script src="../node_modules/mocha/mocha.js"></script>
+        <script>
+          if (typeof initMochaPhantomJS === 'function') {
+            initMochaPhantomJS()
+          }
+        </script>
+        <script>
+          mocha.ui('bdd'); 
+          mocha.reporter('html');
+        </script>
+        <!--<script src="./bundle.js"></script>-->
+        <script>
+          console.log("running stuff");
+          if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+          else { mocha.run(); }
+        </script>
+    </body>
+</html>
