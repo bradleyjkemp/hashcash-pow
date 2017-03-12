@@ -19,23 +19,35 @@ Hashcash.prototype.checkToken = function (token) {
 
 Hashcash.prototype._checkToken = function (tokenArray) {
   let difficulty = this._tokenDifficulty(tokenArray);
-  let hash = sha("sha1").update(this._tokenStringFromArray(tokenArray)).digest();
+  let hash = sha("sha1").update(this._tokenStringFromArray(tokenArray)).digest('hex');
   
-  let valid = true;
-  let hashArray = Array.from(new Uint8Array(hash));
-  let numNullBytes = Math.floor(difficulty / 8);
-  for (let i = 0; i < numNullBytes; i++) {
-    if (hashArray[i] !== 0) {
-      valid = false;
-      break;
-    }
-
-  }
-  let numNullBits = difficulty - 8 * numNullBytes;
-  valid = valid && (hashArray[numNullBytes] <= Math.pow(2, 8 - numNullBits));
-
-  return valid;
+  let mask = this._prefixMask(difficulty);
+  return hash.substring(0, mask.length) <= mask;
 };
+
+Hashcash.prototype._prefixMask = function (difficulty) {
+  let nibbleMaskLength = Math.ceil(difficulty / 4);
+  let nullBitsInLastNibble = difficulty - 4*(nibbleMaskLength-1);
+  let nibbleMask = new Array(nibbleMaskLength).join("0");
+  switch (nullBitsInLastNibble) {
+    case 4:
+      nibbleMask += 0;
+      break;
+    case 3:
+      nibbleMask += 1;
+      break;
+    case 2:
+      nibbleMask += 2;
+      break;
+    case 1:
+      nibbleMask += 4;
+      break;
+    default:
+      throw new Error();
+  }
+  
+  return nibbleMask;
+}
 
 Hashcash.prototype.generateToken = function (challenge, difficulty) {
   let counter = 0;

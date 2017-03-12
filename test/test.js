@@ -39,14 +39,33 @@ describe("hashcash", function() {
   });
   
   describe("checkToken", function() {
-    it("accepts valid token string", function(done) {
-      hashcash.checkToken(exampleToken, (valid) => {assert.equal(valid, true); done()});
+    it("accepts valid token string", function() {
+      assert.equal(hashcash.checkToken(exampleToken), true);
     });
-    it("accepts valid token array", function(done) {
-      hashcash.checkToken(exampleTokenArray, (valid) => {assert.equal(valid, true); done()});
-    })
-    it("rejects invalid token", function(done) {
-      hashcash.checkToken(invalidToken, (valid) => {assert.equal(valid, false); done()});
+    it("accepts valid token array", function() {
+      assert.equal(hashcash.checkToken(exampleTokenArray), true);
     });
-  })
+    it("rejects invalid token", function() {
+      assert.equal(hashcash.checkToken(invalidToken), false);
+    });
+  });
+  
+  describe("generateToken", function() {
+    it("generates valid token", function() {
+      this.timeout(100000);
+      assert.equal(hashcash.checkToken(hashcash.generateToken("hello", 10)), true);
+    });
+    it("generates valid token 2", function() {
+      this.timeout(100000);
+      assert.equal(hashcash.checkToken(hashcash.generateToken("hello", 11)), true);
+    });
+    it("generates valid token 3", function() {
+      this.timeout(100000);
+      assert.equal(hashcash.checkToken(hashcash.generateToken("hello", 12)), true);
+    });
+    it("generates valid token 4", function() {
+      this.timeout(100000);
+      assert.equal(hashcash.checkToken(hashcash.generateToken("hello", 13)), true);
+    });
+  });
 });
